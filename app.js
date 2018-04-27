@@ -12,6 +12,8 @@ var factura = require('./routes/factura.js');
 
 var usuario = require('./routes/usuario.js');
 
+var sesion = require('./routes/sesion.js');
+
 var login = require('./routes/login.js');
 
 var app = express();
@@ -48,6 +50,7 @@ app.use('/cliente', cliente);
 app.use('/presupuesto', presupuesto);
 app.use('/factura', factura);
 app.use('/usuario', usuario);//la ruta usuario gestiona el objeto usuario
+app.use('/sesion', sesion);
 app.use('/login', login);
 
 app.listen(3000, function () {

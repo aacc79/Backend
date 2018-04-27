@@ -5,7 +5,9 @@ var proteccionhttp = require('../middleware/proteccionhttp');/* Para evitar que 
 var app = express();
 
 app.get('/', (req, res, next)=> {/* los get son peticiones en los que la app dice al servidor 'dame los proveedores', no recibe nada */
-    Proveedor.find({}).exec((err, datos)=>{/* llama a la base de datos, hace un find sobre proveedors, y si hay un dato lo mete aquó ¿? */
+    var tramo = req.query.tramo;
+    tramo = Number(tramo);//tramo nos llega como un string desde la app, pero el método skip requiere un número. Para ello usamos el método number para cambiar el tipo de tramo
+    Proveedor.find({}).skip(tramo).limit(5).exec((err, datos)=>{/* llama a la base de datos, hace un find sobre proveedores, y si hay un dato lo mete aquó ¿?  hacemos que muestre solo 5, y que haya una paginación que vaya variando, a la que llamamos 'tramo'*/
         if(err){/* si no es capaz de hacer un find */
             return res.status(400).json({
                 ok:false,
@@ -13,10 +15,13 @@ app.get('/', (req, res, next)=> {/* los get son peticiones en los que la app dic
                 errores: err
             })
         }
-        res.status(200).json({/* 200 Respuesta estándar para peticiones correctas. https://es.wikipedia.org/wiki/Anexo:C%C3%B3digos_de_estado_HTTP*/
+        Proveedor.count({}, (err, totales)=>{
+            res.status(200).json({/* 200 Respuesta estándar para peticiones correctas. https://es.wikipedia.org/wiki/Anexo:C%C3%B3digos_de_estado_HTTP*/
             ok:true,
-            proveedores: datos /* le enchufamos los datos */
-        })
+            proveedores: datos, /* le enchufamos los datos */
+            totales// equivale a totales(q es parametro): totales(q es propiedad) //enviamos el resultado
+        })/* este count engloba en sí find().count({}) */
+    })
     })    /* encuéntrame todos los proveedores dentro de proveedors */
 });
 
