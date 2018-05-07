@@ -6,6 +6,8 @@ var proveedor = require('./routes/proveedor.js');
 
 var cliente = require('./routes/cliente.js');
 
+var articulo = require('./routes/articulo.js');
+
 var presupuesto = require('./routes/presupuesto.js');
 
 var factura = require('./routes/factura.js');
@@ -21,6 +23,7 @@ var app = express();
 var mongoose = require('mongoose');
 
 mongoose.Promise = require('bluebird');
+
 mongoose.connect('mongodb://localhost:27017/erp',{promiseLibrary:require('bluebird')})/* Una url es un tipo de uri. En ella ponemos la ip del servidor, que en nuestro caso está en el propio equipo; y luego el puerto, que por defecto en los servidores mongo es 27017 // erp = Enterprise Resource P*/
     .then( ()=>{
         console.log('Conexión a la base de datos OK')
@@ -42,15 +45,14 @@ app.use(function (req, res,next) {
 
 
 app.use(bodyParser.json({}));
-
 app.use(bodyParser.urlencoded({'extended':'false'}));
-
 app.use('/proveedor', proveedor);/* Lo que entre en el servidor 3000 por la ruta proveedor lo coge nuestro método post */
 app.use('/cliente', cliente);
 app.use('/presupuesto', presupuesto);
+app.use('/articulo', articulo);
 app.use('/factura', factura);
 app.use('/usuario', usuario);//la ruta usuario gestiona el objeto usuario
-app.use('/sesion', sesion);
+app.use('/sesion', sesion);// usa la ruta sesion con el objeto sesion
 app.use('/login', login);
 
 app.listen(3000, function () {

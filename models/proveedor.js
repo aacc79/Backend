@@ -1,5 +1,5 @@
 var mongoose = require('mongoose'); //llamamos a mongoose
-var unique = require('mongoose-unique-validator'); //llamamos a mongoose
+var unique = require('mongoose-unique-validator');
 
 var ProveedorSchema = new mongoose.Schema({/* Esto es un constructor. Nos permite definir qué va a tener nuestro proveedor, así como tipar los datos */
     nombre:String,

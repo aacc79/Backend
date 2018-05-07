@@ -36,6 +36,7 @@ app.post('/', (req,res)=>{/* req,res para gestionar petición y respuesta */
             token: token, /* Cuando sea correcto, mandamos al frontend el token */ //En ES6 es suficiente con escribir token
             nombre: datos.nombre,//en el mensaje de login aparecerá el nombre
             rol: datos.rol, //cada vez que se haga login exitosamente, en la respuesta tendremos el rol
+            _id:datos._id
         })
 
 
