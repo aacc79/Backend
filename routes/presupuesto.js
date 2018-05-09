@@ -5,7 +5,7 @@ var Presupuesto = require('../models/presupuesto.js');/* importamos el modelo de
 var app = express();
 
 app.get('/', (req, res, next)=> {/* los get son peticiones en los que la app dice al servidor 'dame los proveedores', no recibe nada */
-    Presupuesto.find({}).exec((err, datos)=>{/* llama a la base de datos, hace un find sobre proveedors, y si hay un dato lo mete aquó ¿? */
+    Presupuesto.find({}).sort({_id:-1}).exec((err, datos)=>{/* llama a la base de datos, hace un find sobre proveedors, y si hay un dato lo mete aquó ¿? */
         if(err){/* si no es capaz de hacer un find */
             return res.status(400).json({
                 ok:false,
@@ -40,16 +40,14 @@ app.get('/:id', (req,res, next)=>{
 app.post('/',(req, res)=>{
     var body = req.body;/* variable para almacenar los datos del proveedor que nos llegan*/
     var presupuesto = new Presupuesto ({/* Tomamos los datos que vienen del http que demando. Igaulamos la propiedad de este objeto con la propiedad que viene del mensaje*/
-        proveedor:body.proveedor,
+        cliente:body.cliente,
         cif:body.cif,
-        fechaLegal:body.fechaLegal,
-        fechaRegistro:body.fechaRegistro,
-        concepto:body.concepto,
-        RetencionIrpf:body.RetencionIrpf,
-        base:body.base,
+        fecha:body.fecha,
+        items:body.items,
+        suma:body.suma,
         tipo:body.tipo,
-        ImporteRetencion:body.ImporteRetencion,
-        importe:body.importe,
+        /* estos dos últimos campos en teoría no deberían mandarse, porque son campos calculados */
+        importeIVA:body.importeIVA,
         total:body.total,
     });
 
