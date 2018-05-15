@@ -20,6 +20,23 @@ app.get('/', (req, res, next)=> {/* los get son peticiones en los que la app dic
     })    /* encuéntrame todos los proveedores dentro de proveedors */
 });
 
+app.get('/clientes', (req, res, next)=> {
+    Presupuesto.aggregate([{$group:{_id:"$cliente",total:{$sum:"$total"}}}])
+     .exec((err, datos)=>{
+        if(err){
+            return res.status(400).json({
+                ok:false,
+                mensaje: 'Error de conexión',
+                errores: err
+            })
+        }
+        res.status(200).json({
+            ok:true,
+            datos: datos 
+        })
+    })
+});
+
 app.get('/:id', (req,res, next)=>{
     Presupuesto.findById(req.params.id,(err, datos)=>{
         if(err){/* si no es capaz de hacer un find */

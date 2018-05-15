@@ -97,7 +97,7 @@ app.get('/:id', (req,res, next)=>{
 
 app.post('/',(req, res)=>{
     var body = req.body;/* variable para almacenar los datos del proveedor que nos llegan*/
-    var Cliente = new Cliente ({/* Tomamos los datos que vienen del http que demando. Igaulamos la propiedad de este objeto con la propiedad que viene del mensaje*/
+    var cliente = new Cliente ({/* Tomamos los datos que vienen del http que demando. Igaulamos la propiedad de este objeto con la propiedad que viene del mensaje*/
         nombre: body.nombre,
         cif: body.cif,
         domicilio: body.domicilio,
@@ -109,7 +109,7 @@ app.post('/',(req, res)=>{
         contacto: body.contacto,
     });
 
-    Cliente.save((err, datos)=>{/* El segundo parámetro, "datos", es lo que se ha guardado */
+    cliente.save((err, datos)=>{/* El segundo parámetro, "datos", es lo que se ha guardado */
         if(err){/* En caso de error, devuélvenos un objeto json con las propiedades relativas el error que has tenido*/
             return res.status(400).json({
                 ok:false,

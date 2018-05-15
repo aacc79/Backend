@@ -24,7 +24,9 @@ var mongoose = require('mongoose');
 
 mongoose.Promise = require('bluebird');
 
-mongoose.connect('mongodb://localhost:27017/erp',{promiseLibrary:require('bluebird')})/* Una url es un tipo de uri. En ella ponemos la ip del servidor, que en nuestro caso está en el propio equipo; y luego el puerto, que por defecto en los servidores mongo es 27017 // erp = Enterprise Resource P*/
+//mongoose.connect('mongodb://localhost:27101,localhost:27102,localhost:27103/erp?replicaSet=clusterserv',{promiseLibrary:require('bluebird')})
+
+mongoose.connect('mongodb://localhost:27017/erp',{promiseLibrary:require('bluebird')})// Una url es un tipo de uri. En ella ponemos la ip del servidor, que en nuestro caso está en el propio equipo; y luego el puerto, que por defecto en los servidores mongo es 27017 // erp = Enterprise Resource P
     .then( ()=>{
         console.log('Conexión a la base de datos OK')
     } )/* Para saber que se ha conectado bien */
